@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: darcy
+      POSTGRES_PASSWORD: darcy
+      POSTGRES_DB: darcy
+    volumes:
+      - darcy_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U darcy -d darcy"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://darcy:darcy@db:5432/darcy
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+volumes:
+  darcy_pgdata:
