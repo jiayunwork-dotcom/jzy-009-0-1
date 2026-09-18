@@ -1,20 +1,8 @@
-# 依赖与构建产物
-node_modules/
-venv/
+.venv/
 __pycache__/
 *.pyc
-dist/
-build/
-*.egg-info/
-
-# 环境与密钥
-.env
-*.key
-*.pem
-auth.env
-
-# IDE / 系统
-.vscode/
-.idea/
-*.swp
-.DS_Store
+.pytest_cache/
+data/
+*.db
+*.db-wal
+*.db-shm
